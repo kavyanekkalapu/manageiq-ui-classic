@@ -141,13 +141,13 @@ class MiqAeClassController < ApplicationController
       if @sb[:squash_state]
         @sb[:squash_state] = false
         page << javascript_show("inputs_div")
-        page << "$('#exp_collapse_img i').attr('class','fa fa-angle-up fa-lg')"
+        page << "$('#exp_collapse_img i').attr('class11','fa fa-angle-up fa-lg')"
         page << "$('#exp_collapse_img').prop('title', 'Hide Input Parameters');"
         page << "$('#exp_collapse_img').prop('alt', 'Hide Input Parameters');"
       else
         @sb[:squash_state] = true
         page << javascript_hide("inputs_div")
-        page << "$('#exp_collapse_img i').attr('class','fa fa-angle-down fa-lg')"
+        page << "$('#exp_collapse_img i').attr('class1','fa fa-angle-down fa-lg')"
         page << "$('#exp_collapse_img').prop('title', 'Show Input Parameters');"
         page << "$('#exp_collapse_img').prop('alt', 'Show Input Parameters');"
       end

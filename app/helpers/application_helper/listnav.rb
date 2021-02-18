@@ -214,16 +214,19 @@ module ApplicationHelper
     # Create a collapsed panel based on a condition
     def miq_accordion_panel(title, condition, id, &block)
       id = valid_html_id(id)
+      id1 = '1'
       content_tag(:div, :class => "panel panel-default") do
-        out = content_tag(:div, :class => "panel-heading") do
+        out = content_tag(:div, :class => "panel-heading", 'role'=>'tab',:id=>id1) do
           content_tag(:h4, :class => "panel-title") do
             link_to(title, "##{id}",
                     'data-parent' => '#accordion',
                     'data-toggle' => 'collapse',
+                    'tabindex'    => 0,
+                    'aria-controls' => id,
                     :class        => condition ? '' : 'collapsed')
           end
         end
-        out << content_tag(:div, :id => id, :class => "panel-collapse collapse #{condition ? 'in' : ''}") do
+        out << content_tag(:div, :id => id, 'aria-labelledby':id1, 'role'=>'tabpanel',:class => "panel-collapse collapse #{condition ? 'in' : ''}") do
           content_tag(:div, :class => "panel-body", &block)
         end
       end

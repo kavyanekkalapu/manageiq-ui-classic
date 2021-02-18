@@ -100,7 +100,7 @@ const TreeView = (props) => {
     <ReduxTree
       nodeIcon=""
       expandIcon="fa fa-fw fa-angle-right"
-      collapseIcon="fa fa-fw fa-angle-down"
+      collapseIcon="fa aaa fa-fw fa-angle-down"
       loadingIcon="fa fa-fw fa-spinner fa-pulse"
       checkedIcon="fa fa-fw fa-check-square-o"
       uncheckedIcon="fa fa-fw fa-square-o"

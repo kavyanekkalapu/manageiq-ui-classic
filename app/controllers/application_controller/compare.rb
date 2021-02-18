@@ -831,6 +831,7 @@ module ApplicationController::Compare
   # Build a section row for the compare grid xml
   def drift_add_section(view, section, records, fields)
     cell_text = section[:header]
+    p "hereeeeeee111 #{section[:header]}"
     length = if records.nil? # Show records count if not nil
                drift_section_fields_total(view, section, fields)
              else # Show fields count
@@ -843,6 +844,7 @@ module ApplicationController::Compare
       :indent     => 0,
       :parent     => nil,
       :section    => true,
+      "tabindex"  => 0,
       :exp_id     => section[:name].to_s,
       :_collapsed => collapsed_state(section[:name].to_s)
     }
@@ -1353,6 +1355,7 @@ module ApplicationController::Compare
 
   # Build a section row for the compare grid xml
   def comp_add_section(view, section, records, fields)
+    p "hereeeeeee #{section[:header]} #{section[:name].to_s} #{collapsed_state(section[:name].to_s)}   "
     cell_text = _(section[:header])
     length = if records.nil? # Show records count if not nil
                comp_section_fields_total(view, section, fields)
@@ -1362,6 +1365,7 @@ module ApplicationController::Compare
     cell_text += " (#{length})"
     row = {
       :col0       => cell_text,
+      "tabindex"  => 0,
       :id         => "id_#{@rows.length}",
       :indent     => 0,
       :parent     => nil,
@@ -1372,6 +1376,7 @@ module ApplicationController::Compare
     row.merge!(compare_section_data_cols(view, section, records))
 
     @section_parent_id = @rows.length
+    p "row isssss #{row}"
     @rows << row
   end
 
