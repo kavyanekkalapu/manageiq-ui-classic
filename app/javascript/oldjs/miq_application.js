@@ -1357,7 +1357,6 @@ window.miqHideSearchClearButton = function(explorer) {
 }
 
 window.toggle_expansion = function(link) {
-  console.log("insideeee",link);
   link = $(link);
   link.find('i').toggleClass('fa-angle-right fa-angle-down');
   link.closest('td').children(0).toggleClass('expanded');

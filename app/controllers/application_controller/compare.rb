@@ -12,12 +12,15 @@ module ApplicationController::Compare
     @sb[:miq_temp_params] = "all"
 
     rpt = get_compare_report(@sb[:compare_db])
+    
     session[:miq_sections] = MiqCompare.sections(rpt)
     ids = session[:miq_selected].collect(&:to_i)
     @compare = MiqCompare.new({:ids     => ids,
                                :include => session[:miq_sections]},
                               rpt)
     get_formatted_time("_model_", "compare")
+    p "rptttttttt #{rpt.attributes}"
+    p "rpttttttttcompare #{@compare}"
     session[:compare_state] = {}
     @compare
   end
@@ -75,6 +78,7 @@ module ApplicationController::Compare
   # Make one button selected & inactive.
   # While other buttons are unselected & active.
   def toggle_button_pressed(active_button, inactive_buttons)
+    p "insideeee 1"
     inactive_buttons.each_with_object(
       active_button => {:enabled => false, :selected => true}
     ) do |button, acc|
@@ -129,6 +133,7 @@ module ApplicationController::Compare
 
   # Toggle compressed/expanded view
   def compare_compress
+    p "insideeee 2"
     @compare = Marshal.load(session[:miq_compare])
     @exists_mode = session[:miq_exists_mode]
     session[:miq_compressed] = !session[:miq_compressed]
@@ -146,6 +151,7 @@ module ApplicationController::Compare
 
   # Toggle exists/details view
   def compare_mode
+    p "insideeee 3"
     @keep_compare = true
     @compare = Marshal.load(session[:miq_compare])
     session[:miq_exists_mode] = !session[:miq_exists_mode]
@@ -158,23 +164,28 @@ module ApplicationController::Compare
       else
         toggle_button_pressed('comparemode_details', %w[comparemode_exists])
       end
+    p "insideeee 4"
     render_compare_and_button_changes(button_changes)
   end
 
   def compare_set_state
     @keep_compare = true
+    p "insideeee 5"
     session[:compare_state] ||= {}
     if !session[:compare_state].include?(params["rowId"])
       session[:compare_state][params["rowId"]] = params["state"]
     elsif session[:compare_state].include?(params["rowId"]) && params["state"].to_i == -1
       session[:compare_state].delete(params["rowId"])
     end
+    p "insideeee else 6666 #{session[:compare_state]}"
+    p "insideeee 6"
     render :update do |page|
       page << javascript_prologue
       page << "miqSparkle(false);"
       # head :ok
     end
   end
+
 
   # Remove one of the VMs from the @compare object
   def compare_remove
@@ -500,6 +511,7 @@ module ApplicationController::Compare
   private
 
   def render_compare_and_button_changes(button_changes)
+    p "insideeeeeee #{button_changes}"
     render :update do |page|
       page << javascript_prologue
       page << "ManageIQ.toolbars.applyChanges(#{button_changes.to_json})"
@@ -1408,6 +1420,7 @@ module ApplicationController::Compare
   # Build a record row for the compare grid xml
   def comp_add_record(view, section, record, ridx)
     @same = true
+    p "hereeeeeee1111 #{@section_parent_id}  "
     row = {
       :col0       => _(record),
       :id         => "id_#{@rows.length}",
@@ -1420,6 +1433,7 @@ module ApplicationController::Compare
     row.merge!(comp_record_data_cols(view, section, record))
 
     @record_parent_id = @rows.length
+    p "hereeeeeee1111 #{row}  "
     @rows << row
   end
 
@@ -1801,6 +1815,7 @@ module ApplicationController::Compare
 
   def collapsed_state(id)
     s = session[:compare_state] || []
+    p "idddddd #{id} #{s} #{!s.include?(id)}"
     !s.include?(id)
   end
 
