@@ -19,8 +19,6 @@ module ApplicationController::Compare
                                :include => session[:miq_sections]},
                               rpt)
     get_formatted_time("_model_", "compare")
-    p "rptttttttt #{rpt.attributes}"
-    p "rpttttttttcompare #{@compare}"
     session[:compare_state] = {}
     @compare
   end
@@ -78,7 +76,6 @@ module ApplicationController::Compare
   # Make one button selected & inactive.
   # While other buttons are unselected & active.
   def toggle_button_pressed(active_button, inactive_buttons)
-    p "insideeee 1"
     inactive_buttons.each_with_object(
       active_button => {:enabled => false, :selected => true}
     ) do |button, acc|
@@ -133,7 +130,6 @@ module ApplicationController::Compare
 
   # Toggle compressed/expanded view
   def compare_compress
-    p "insideeee 2"
     @compare = Marshal.load(session[:miq_compare])
     @exists_mode = session[:miq_exists_mode]
     session[:miq_compressed] = !session[:miq_compressed]
@@ -151,7 +147,6 @@ module ApplicationController::Compare
 
   # Toggle exists/details view
   def compare_mode
-    p "insideeee 3"
     @keep_compare = true
     @compare = Marshal.load(session[:miq_compare])
     session[:miq_exists_mode] = !session[:miq_exists_mode]
@@ -164,21 +159,17 @@ module ApplicationController::Compare
       else
         toggle_button_pressed('comparemode_details', %w[comparemode_exists])
       end
-    p "insideeee 4"
     render_compare_and_button_changes(button_changes)
   end
 
   def compare_set_state
     @keep_compare = true
-    p "insideeee 5"
     session[:compare_state] ||= {}
     if !session[:compare_state].include?(params["rowId"])
       session[:compare_state][params["rowId"]] = params["state"]
     elsif session[:compare_state].include?(params["rowId"]) && params["state"].to_i == -1
       session[:compare_state].delete(params["rowId"])
     end
-    p "insideeee else 6666 #{session[:compare_state]}"
-    p "insideeee 6"
     render :update do |page|
       page << javascript_prologue
       page << "miqSparkle(false);"
@@ -511,7 +502,6 @@ module ApplicationController::Compare
   private
 
   def render_compare_and_button_changes(button_changes)
-    p "insideeeeeee #{button_changes}"
     render :update do |page|
       page << javascript_prologue
       page << "ManageIQ.toolbars.applyChanges(#{button_changes.to_json})"
@@ -843,7 +833,6 @@ module ApplicationController::Compare
   # Build a section row for the compare grid xml
   def drift_add_section(view, section, records, fields)
     cell_text = section[:header]
-    p "hereeeeeee111 #{section[:header]}"
     length = if records.nil? # Show records count if not nil
                drift_section_fields_total(view, section, fields)
              else # Show fields count
@@ -1367,7 +1356,6 @@ module ApplicationController::Compare
 
   # Build a section row for the compare grid xml
   def comp_add_section(view, section, records, fields)
-    p "hereeeeeee #{section[:header]} #{section[:name].to_s} #{collapsed_state(section[:name].to_s)}   "
     cell_text = _(section[:header])
     length = if records.nil? # Show records count if not nil
                comp_section_fields_total(view, section, fields)
@@ -1375,9 +1363,9 @@ module ApplicationController::Compare
                records.length
              end
     cell_text += " (#{length})"
+    expandIcon="fa fa-fw fa-angle-right"
     row = {
-      :col0       => cell_text,
-      "tabindex"  => 0,
+      :col0       => "<div> <a  id=\"exp-link\"  tabindex=\"0\" ><i  id=\"exp-icon\" class=\"#{expandIcon} expand-button\"></i></a>#{cell_text}</div>",
       :id         => "id_#{@rows.length}",
       :indent     => 0,
       :parent     => nil,
@@ -1388,12 +1376,12 @@ module ApplicationController::Compare
     row.merge!(compare_section_data_cols(view, section, records))
 
     @section_parent_id = @rows.length
-    p "row isssss #{row}"
     @rows << row
   end
 
   # Section fields counter (in brackets)
   # Regarding to buttons "Attributes with same/different values"
+
   def comp_section_fields_total(view, section, fields)
     section_fields_total(view, section, fields, :comp)
   end
@@ -1420,7 +1408,6 @@ module ApplicationController::Compare
   # Build a record row for the compare grid xml
   def comp_add_record(view, section, record, ridx)
     @same = true
-    p "hereeeeeee1111 #{@section_parent_id}  "
     row = {
       :col0       => _(record),
       :id         => "id_#{@rows.length}",
@@ -1433,7 +1420,6 @@ module ApplicationController::Compare
     row.merge!(comp_record_data_cols(view, section, record))
 
     @record_parent_id = @rows.length
-    p "hereeeeeee1111 #{row}  "
     @rows << row
   end
 
@@ -1815,7 +1801,6 @@ module ApplicationController::Compare
 
   def collapsed_state(id)
     s = session[:compare_state] || []
-    p "idddddd #{id} #{s} #{!s.include?(id)}"
     !s.include?(id)
   end
 
