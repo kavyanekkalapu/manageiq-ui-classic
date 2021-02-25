@@ -2,8 +2,9 @@
 - if @compare.nil?
   = render :partial => 'layouts/info_msg', :locals => {:message => _("No Records Found.")}
 - else
+  p "rowsss #{@rows}"
   #compare-grid
-    %table.table.table-bordered
+    %table.table.table-bordered.table-treegrid
       %thead
         %tr
           - @cols.each do |col|
@@ -12,17 +13,18 @@
                 = col[:name].html_safe
       %tbody
         - @rows.each do |row|
-          %tr{'data-parent' => row[:parent], :class => row[:_collapsed] ? 'collapsed' : 'nil',:class => (row[:parent]==1) ? 'hidden' : 'nil', 'data-exp-id' => row[:exp_id]}
+          %tr{'data-parent' => row[:parent], 'data-parent-section' => row[:parent_section], :class => row[:_collapsed] ? 'collapsed' : 'nil',:class => row[:parent] ? 'hidden' : 'nil', 'data-exp-id' => row[:exp_id]}
             %th.treegrid-node
               = row[:col0].html_safe
             - (@cols.length - 1).times do |i|
               %td
                 = row["col#{i + 1}".to_sym].to_s.html_safe
     :javascript
-      $('#exp-link').on('click keydown', function (e) {
+      $('.exp-link').on('click keydown', function (e) {
         e.preventDefault();
-        $('#exp-icon').toggleClass('fa-angle-right fa-angle-down');
-        $("tr[data-parent='1']").toggleClass("hidden");
+        var parentSection=e.currentTarget.classList[1];
+        $(e.target).toggleClass('fa-angle-right fa-angle-down');
+        $(`tr[data-parent-section=${parentSection}]`).toggleClass("hidden");
       });
 
 - unless @explorer

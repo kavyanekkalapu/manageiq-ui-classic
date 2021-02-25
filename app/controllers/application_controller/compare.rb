@@ -1363,12 +1363,14 @@ module ApplicationController::Compare
                records.length
              end
     cell_text += " (#{length})"
-    expandIcon="fa fa-fw fa-angle-right"
+    expandIcon = "fa fa-fw fa-angle-right"
+    section_class = section[:name].to_s.gsub(/[\.]/, '_')
     row = {
-      :col0       => "<div> <a  id=\"exp-link\"  tabindex=\"0\" ><i  id=\"exp-icon\" class=\"#{expandIcon} expand-button\"></i></a>#{cell_text}</div>",
+      :col0       => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon expand-button\"></i></a>#{cell_text}</div>",
       :id         => "id_#{@rows.length}",
       :indent     => 0,
       :parent     => nil,
+      :parent_section =>nil,
       :section    => true,
       :exp_id     => section[:name].to_s,
       :_collapsed => collapsed_state(section[:name].to_s)
@@ -1413,6 +1415,7 @@ module ApplicationController::Compare
       :id         => "id_#{@rows.length}",
       :indent     => 1,
       :parent     => @section_parent_id,
+      :parent_section=> section[:name].to_s.gsub(/[\.]/, '_'),
       :record     => true,
       :exp_id     => "#{section[:name]}_#{ridx}",
       :_collapsed => collapsed_state("#{section[:name]}_#{ridx}")
@@ -1671,6 +1674,7 @@ module ApplicationController::Compare
       :id            => "id_#{@rows.length}",
       :indent        => 1,
       :parent        => @section_parent_id,
+      :parent_section=> section[:name].to_s.gsub(/[\.]/, '_'),
       :section_field => true
     }
 
