@@ -839,11 +839,14 @@ module ApplicationController::Compare
                records.length
              end
     cell_text += " (#{length})"
+    expandIcon = "fa fa-fw fa-angle-right"
+    section_class = section[:name].to_s.gsub(/[\.]/, '_')
     row = {
-      :col0       => cell_text,
+      :col0       => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon expand-button\"></i></a>#{cell_text}</div>",
       :id         => "id_#{@rows.length}",
       :indent     => 0,
       :parent     => nil,
+      :parent_section =>nil,
       :section    => true,
       "tabindex"  => 0,
       :exp_id     => section[:name].to_s,
@@ -883,13 +886,14 @@ module ApplicationController::Compare
   def drift_add_record(view, section, record, ridx)
     @same = true
     row = {
-      :col0       => record,
-      :id         => "id_#{@rows.length}",
-      :indent     => 1,
-      :parent     => @section_parent_id,
-      :record     => true,
-      :exp_id     => "#{section[:name]}_#{ridx}",
-      :_collapsed => collapsed_state("#{section[:name]}_#{ridx}")
+      :col0           => record,
+      :id             => "id_#{@rows.length}",
+      :indent         => 1,
+      :parent         => @section_parent_id,
+      :parent_section => section[:name].to_s.gsub(/[\.]/, '_'),
+      :record         => true,
+      :exp_id         => "#{section[:name]}_#{ridx}",
+      :_collapsed     => collapsed_state("#{section[:name]}_#{ridx}")
     }
     row.merge!(drift_record_data_cols(view, section, record))
 
@@ -1070,6 +1074,7 @@ module ApplicationController::Compare
       :id            => "id_#{@rows.length}",
       :indent        => 1,
       :parent        => @section_parent_id,
+      :parent_section=> section[:name].to_s.gsub(/[\.]/, '_'),
       :section_field => true
     }
 

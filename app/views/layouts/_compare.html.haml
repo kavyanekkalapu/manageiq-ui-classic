@@ -2,7 +2,6 @@
 - if @compare.nil?
   = render :partial => 'layouts/info_msg', :locals => {:message => _("No Records Found.")}
 - else
-  p "rowsss #{@rows}"
   #compare-grid
     %table.table.table-bordered.table-treegrid
       %thead
@@ -23,7 +22,7 @@
       $('.exp-link').on('click keydown', function (e) {
         e.preventDefault();
         var parentSection=e.currentTarget.classList[1];
-        $(e.target).toggleClass('fa-angle-right fa-angle-down');
+        $(e.target.firstChild).toggleClass('fa-angle-right fa-angle-down');
         $(`tr[data-parent-section=${parentSection}]`).toggleClass("hidden");
       });
 
