@@ -842,14 +842,13 @@ module ApplicationController::Compare
     expandIcon = length > 0 ?  "fa fa-fw fa-angle-right" :  nil
     section_class = section[:name].to_s.gsub(/[\.]/, '_')
     row = {
-      :col0       => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon expand-button\"></i></a>#{cell_text}</div>",
-      :id         => "id_#{@rows.length}",
-      :indent     => 0,
-      :node_parent => nil,
-      :parent     => nil,
-      :parent_section =>nil,
-      :section    => true,
-      "tabindex"  => 0,
+      :col0           => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon \"></i></a>#{cell_text}</div>",
+      :id             => "id_#{@rows.length}",
+      :indent         => 0,
+      :node_parent    => nil,
+      :parent         => nil,
+      :parent_section => nil,
+      :section        => true,
       :exp_id     => section[:name].to_s,
       :_collapsed => collapsed_state(section[:name].to_s)
     }
@@ -889,7 +888,7 @@ module ApplicationController::Compare
     expandIcon = @rows.length > 0 ?  "fa fa-fw fa-angle-right" :  nil
     section_class = "#{section[:name]}_#{ridx}".to_s.gsub(/[\.]/, '_')
     row = {
-      :col0          => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon expand-button\"></i></a>#{record}</div>",
+      :col0          => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon \"></i></a>#{record}</div>",
       :id            => "id_#{@rows.length}",
       :indent         => 1,
       :node_parent   => nil,
@@ -1378,15 +1377,15 @@ module ApplicationController::Compare
     expandIcon = length > 0 ?  "fa fa-fw fa-angle-right" :  nil
     section_class = section[:name].to_s.gsub(/[\.]/, '_')
     row = {
-      :col0       => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon expand-button\"></i></a>#{cell_text}</div>",
-      :id         => "id_#{@rows.length}",
-      :indent     => 0,
-      :node_parent => nil,
-      :parent     => nil,
-      :parent_section =>nil,
-      :section    => true,
-      :exp_id     => section[:name].to_s,
-      :_collapsed => collapsed_state(section[:name].to_s)
+      :col0           => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon \"></i></a>#{cell_text}</div>",
+      :id             => "id_#{@rows.length}",
+      :indent         => 0,
+      :node_parent    => nil,
+      :parent         => nil,
+      :parent_section => nil,
+      :section        => true,
+      :exp_id         => section[:name].to_s,
+      :_collapsed     => collapsed_state(section[:name].to_s)
     }
     row.merge!(compare_section_data_cols(view, section, records))
 
@@ -1426,7 +1425,7 @@ module ApplicationController::Compare
     expandIcon = @rows.length > 0 ?  "fa fa-fw fa-angle-right" :  nil
     section_class = "#{section[:name]}_#{ridx}".to_s.gsub(/[\.]/, '_')
     row = {
-      :col0          => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon expand-button\"></i></a>#{record}</div>",
+      :col0          => "<div> <a  class=\"exp-link #{section_class}\"  tabindex=\"0\" ><i class=\"#{expandIcon} exp-icon\"></i></a>#{record}</div>",
       :id            => "id_#{@rows.length}",
       :indent        => 1,
       :node_parent   => nil,
