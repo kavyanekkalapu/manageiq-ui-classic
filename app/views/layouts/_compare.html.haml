@@ -3,7 +3,7 @@
   = render :partial => 'layouts/info_msg', :locals => {:message => _("No Records Found.")}
 - else
   #compare-grid
-    %table.table.table-bordered.table-treegrid
+    %table.table.table-bordered.table-treegrid.table-expanded
       %thead
         %tr
           - @cols.each do |col|
