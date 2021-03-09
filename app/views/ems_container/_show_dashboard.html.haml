@@ -4,14 +4,18 @@
     = render :partial => "ems_container/aggregate-status-card"
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
+      = react 'UtilizationChartGraph', {:providerId => @record.id.to_s, :title => _('Aggregated Node Utilization'), :cpuConfig =>'cpuUsageConfig' , :memoryConfig => 'memoryUsageConfig', :dashboard => 'container_dashboard' }
       = render :partial => "ems_container/utilization-trend-chart"
     .col-xs-12.col-sm-12.col-md-6
+      = react 'UsageTrendChart', {:providerId => @record.id.to_s, :config => 'NetworkUsageConfig', :apiUrl => 'container_dashboard/network_metrics_data', :dataPoint => 'network_metrics'}
+      = react 'UsageTrendChart', {:providerId => @record.id.to_s, :config => 'ImageUsageConfig', :apiUrl => 'container_dashboard/image_metrics_data', :dataPoint => 'image_metrics'}
       = render :partial => "ems_container/trends-chart"
       = render :partial => "ems_container/recent-images-line-chart"
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
       = render :partial => "ems_container/heatmap"
     .col-xs-12.col-sm-12.col-md-6
+      = react 'PodsTrendChart', {:providerId => @record.id.to_s, :config => 'PodUsageConfig', :apiUrl => 'container_dashboard/pod_metrics_data', :dataPoint => 'pod_metrics'}
       = render :partial => "ems_container/recent-pods-line-chart"
 
   :javascript

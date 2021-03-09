@@ -55,7 +55,7 @@ class EmsDashboardService < DashboardService
     group_by_sql = Arel::Nodes::NamedFunction.new("to_char", to_char_args)
 
     model.where(:ems_id => @ems.id)
-         .where(db_table[:created_on].gt(30.days.ago.utc))
+         .where(db_table[:created_on].gt(30000.days.ago.utc))
          .group(group_by_sql.to_sql)
          .count
   end

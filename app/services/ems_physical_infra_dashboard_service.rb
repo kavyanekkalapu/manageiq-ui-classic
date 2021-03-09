@@ -195,7 +195,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
     valid_servers = Hash.new(0)
     warning_servers = Hash.new(0)
     critical_servers = Hash.new(0)
-    all_physical_servers = PhysicalServer.where('created_at > ?', 30.days.ago.utc)
+    all_physical_servers = PhysicalServer.where('created_at > ?', 30000.days.ago.utc)
     all_physical_servers = all_physical_servers.where('ems_id = ?', @ems_id) if @ems_id
     all_physical_servers.sort_by(&:created_at).each do |server|
       date = server.created_at.strftime("%Y-%m-%d")
@@ -248,7 +248,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
 
   def recent_records(model)
     all_records = Hash.new(0)
-    records = model.where('created_at > ?', 30.days.ago.utc)
+    records = model.where('created_at > ?', 30000.days.ago.utc)
     records = if @ems_id
                 records.where('ems_id = ?', @ems_id)
               else

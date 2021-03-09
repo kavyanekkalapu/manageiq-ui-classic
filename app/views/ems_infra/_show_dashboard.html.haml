@@ -4,13 +4,16 @@
     = react 'AggregateStatusCard', {:providerId => @record.id.to_s, :providerType => 'ems_infra'}
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
+      = react 'UtilizationChartGraph', {:providerId => @record.id.to_s, :title => _('Global Utilization'), :cpuConfig =>'cpuUsageConfig' , :memoryConfig => 'memoryUsageConfig', :dashboard => 'ems_infra_dashboard' }
       = render :partial => "utilization-trend-chart"
     .col-xs-12.col-sm-12.col-md-6
       = render :partial => "heatmap"
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
+      = react 'RecentHostGraph', {:providerId => @record.id.to_s}
       = render :partial => "recent-hosts-line-chart"
     .col-xs-12.col-sm-12.col-md-6
+      = react 'RecentVmGraph', {:providerId => @record.id.to_s, :title => _('Recent VMs'), :config => 'recentVmsConfig', :apiUrl => 'ems_infra_dashboard/recent_vms_data', :dataPoint => 'recentResources'}
       = render :partial => "recent-vms-line-chart"
 
   :javascript
