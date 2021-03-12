@@ -4,8 +4,10 @@
     = react 'AggregateStatusCard', {:providerId => @record.id.to_s, :providerType => 'ems_cloud'}
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-6
+      = react 'RecentVmGraph', {:providerId => @record.id.to_s, :title => _('Recent Instances'), :config => 'recentInstancesConfig', :apiUrl => 'ems_cloud_dashboard/recent_instances_data', :dataPoint => 'recentResources'}
       = render :partial => "recent-instances-line-chart"
     .col-xs-12.col-sm-12.col-md-6
+      = react 'RecentVmGraph', {:providerId => @record.id.to_s, :title => _('Recent Images'), :config => 'recentImagesConfig', :apiUrl => 'ems_cloud_dashboard/recent_images_data', :dataPoint => 'recentResources'}
       = render :partial => "recent-images-line-chart"
   :javascript
     ManageIQ.angular.app.value('providerId', '#{@record.id}');

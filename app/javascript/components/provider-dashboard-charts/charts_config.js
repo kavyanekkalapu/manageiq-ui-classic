@@ -197,4 +197,25 @@ export const chartConfig = {
     setAreaChart: true,
     legendLeftText: __('Last 30 Days'),
   },
+  recentInstancesConfig: {
+    chartId: 'recentInstancesChart',
+    tooltipFn: dailyTimeTooltip,
+    units: __('Instances'),
+    point: { r: 1 },
+    size: { height: 145 },
+    grid: { y: { show: false } },
+    setAreaChart: true,
+    legendLeftText: __('Last 30 Days'),
+  },
+  recentImagesConfig: {
+    chartId: 'recentInstancesChart',
+    tooltipFn: dailyTimeTooltip,
+    units: __('Images'),
+    point: { r: 1 },
+    size: { height: 145 },
+    grid: { y: { show: false } },
+    setAreaChart: true,
+    legendLeftText: __('Last 30 Days'),
+  },
 };
+
